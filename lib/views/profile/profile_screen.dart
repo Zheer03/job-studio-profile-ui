@@ -11,6 +11,7 @@ import 'package:job_studio_profile_ui/widgets/allow_negative_padding.dart';
 import 'package:job_studio_profile_ui/widgets/app_bar_widget.dart';
 import 'package:job_studio_profile_ui/widgets/bottom_sheet_widget.dart';
 import 'package:job_studio_profile_ui/widgets/button_widget.dart';
+import 'package:job_studio_profile_ui/widgets/chip_widget.dart';
 import 'package:job_studio_profile_ui/widgets/expandable_page_view.dart';
 import 'package:job_studio_profile_ui/widgets/full_screen_widget.dart';
 import 'package:job_studio_profile_ui/widgets/icon_button_widget.dart';
@@ -276,7 +277,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Positioned(
-                      bottom: 20,
+                      bottom: 12,
                       right: 20,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -296,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Gap(4.0),
                             TextWidget(
-                              '\$ 650,000',
+                              '\$650,000',
                               fontWeight: FontWeight.w600,
                             ),
                           ],
@@ -379,7 +380,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   TextWidget(
                     'Iraq, Slemani',
                     color: AppColors.systemGray,
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ],
@@ -562,12 +563,13 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
                     (index) {
                       switch (index) {
                         case 0:
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
+                                const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWidget(
@@ -597,8 +599,8 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
                                     ),
                                   ],
                                 ),
-                                Gap(16.0),
-                                Column(
+                                const Gap(16.0),
+                                const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWidget(
@@ -625,8 +627,8 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
                                     ),
                                   ],
                                 ),
-                                Gap(16.0),
-                                Column(
+                                const Gap(16.0),
+                                const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWidget(
@@ -656,8 +658,8 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
                                     ),
                                   ],
                                 ),
-                                Gap(16.0),
-                                Column(
+                                const Gap(16.0),
+                                const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWidget(
@@ -697,8 +699,8 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
                                     ),
                                   ],
                                 ),
-                                Gap(16.0),
-                                Column(
+                                const Gap(16.0),
+                                const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextWidget(
@@ -728,7 +730,99 @@ class _ProfileInfoWidgetState extends State<ProfileInfoWidget> {
                                     ),
                                   ],
                                 ),
-                                Gap(64.0),
+                                const Gap(16.0),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const TextWidget(
+                                      'Skills',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    const Gap(8.0),
+                                    Wrap(
+                                      spacing: 8.0,
+                                      runSpacing: 8.0,
+                                      children: [
+                                        ChipWidget(
+                                          label: 'Graphic Design',
+                                          labelSize: 14,
+                                          labelWeight: FontWeight.w500,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16.0,
+                                                  vertical: 8.0),
+                                          onSelected: null,
+                                          onUnselected: null,
+                                          hasTrailingIcon: false,
+                                          borderColor: AppColors.systemGray,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        ChipWidget(
+                                          label: 'Motion Graphic',
+                                          labelSize: 14,
+                                          labelWeight: FontWeight.w500,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16.0,
+                                                  vertical: 8.0),
+                                          onSelected: null,
+                                          onUnselected: null,
+                                          hasTrailingIcon: false,
+                                          borderColor: AppColors.systemGray,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        ChipWidget(
+                                          label: 'UI/UX Design',
+                                          labelSize: 14,
+                                          labelWeight: FontWeight.w500,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16.0,
+                                                  vertical: 8.0),
+                                          onSelected: null,
+                                          onUnselected: null,
+                                          hasTrailingIcon: false,
+                                          borderColor: AppColors.systemGray,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        ChipWidget(
+                                          label: 'Management',
+                                          labelSize: 14,
+                                          labelWeight: FontWeight.w500,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16.0,
+                                                  vertical: 8.0),
+                                          onSelected: null,
+                                          onUnselected: null,
+                                          hasTrailingIcon: false,
+                                          borderColor: AppColors.systemGray,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        ChipWidget(
+                                          label: 'Multiskilled',
+                                          labelSize: 14,
+                                          labelWeight: FontWeight.w500,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16.0,
+                                                  vertical: 8.0),
+                                          onSelected: null,
+                                          onUnselected: null,
+                                          hasTrailingIcon: false,
+                                          borderColor: AppColors.systemGray,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const Gap(64.0),
                               ],
                             ),
                           );

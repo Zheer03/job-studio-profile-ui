@@ -16,8 +16,10 @@ class PhoneNumberTextFieldWidget extends StatefulWidget {
   const PhoneNumberTextFieldWidget({
     super.key,
     required this.controller,
+    this.error = false,
   });
   final TextEditingController controller;
+  final bool error;
 
   @override
   State<PhoneNumberTextFieldWidget> createState() =>
@@ -92,8 +94,10 @@ class _PhoneNumberTextFieldWidgetState
         ),
         const Gap(10.0),
         Expanded(
-          child: TextFormField(
+          child: AnimatedTextFormField(
+            hintText: 'Phone Number',
             controller: widget.controller,
+            error: widget.error,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Enter your phone number';
@@ -110,40 +114,40 @@ class _PhoneNumberTextFieldWidgetState
                 defaultCountryCode: defaultCountry.code,
               ),
             ],
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
-              errorMaxLines: 2,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                borderSide: const BorderSide(
-                  color: AppColors.systemGray02Light,
-                  width: 1,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                borderSide: const BorderSide(
-                  color: AppColors.logoGreen,
-                  width: 1,
-                ),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                borderSide: BorderSide(
-                  color: Colors.red.shade800,
-                  width: 1.5,
-                ),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                borderSide: BorderSide(
-                  color: Colors.red.shade800,
-                  width: 1.5,
-                ),
-              ),
-              hintText: 'Phone Number',
-            ),
+            // decoration: InputDecoration(
+            //   contentPadding:
+            //       const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
+            //   errorMaxLines: 2,
+            //   enabledBorder: OutlineInputBorder(
+            //     borderRadius: BorderRadius.circular(12.0),
+            //     borderSide: const BorderSide(
+            //       color: AppColors.systemGray02Light,
+            //       width: 1,
+            //     ),
+            //   ),
+            //   focusedBorder: OutlineInputBorder(
+            //     borderRadius: BorderRadius.circular(12.0),
+            //     borderSide: const BorderSide(
+            //       color: AppColors.logoGreen,
+            //       width: 1,
+            //     ),
+            //   ),
+            //   errorBorder: OutlineInputBorder(
+            //     borderRadius: BorderRadius.circular(12.0),
+            //     borderSide: BorderSide(
+            //       color: Colors.red.shade800,
+            //       width: 1.5,
+            //     ),
+            //   ),
+            //   focusedErrorBorder: OutlineInputBorder(
+            //     borderRadius: BorderRadius.circular(12.0),
+            //     borderSide: BorderSide(
+            //       color: Colors.red.shade800,
+            //       width: 1.5,
+            //     ),
+            //   ),
+            //   hintText: 'Phone Number',
+            // ),
           ),
         ),
       ],

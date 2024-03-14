@@ -26,52 +26,57 @@ class SignUpScreen extends StatelessWidget {
         backgroundColor: AppColors.transparent,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            // color: Colors.amber,
-            gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              transform: const GradientRotation(0.4),
-              stops: const [0.7, 1],
-              colors: [
-                // const Color(0xFFF9F9F9).withOpacity(1),
-                // AppColors.systemWhite,
-                AppColors.logoGreen.withAlpha(0),
-                AppColors.logoGreen.withAlpha(40),
-              ],
-            ),
-          ),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Positioned(
-                left: -100,
-                top: -400,
-                child: SvgIcon(
-                  name: SvgIcons.C,
-                  // color: Colors.black,
-                  width: MediaQuery.of(context).size.width * 1.5,
-                  height: MediaQuery.of(context).size.width * 1.5,
-                ),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              // color: Colors.amber,
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                transform: const GradientRotation(0.4),
+                stops: const [0.7, 1],
+                colors: [
+                  // const Color(0xFFF9F9F9).withOpacity(1),
+                  // AppColors.systemWhite,
+                  AppColors.logoGreen.withAlpha(0),
+                  AppColors.logoGreen.withAlpha(40),
+                ],
               ),
-              const SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: [
-                      SvgIcon(
-                        name: SvgIcons.logo,
-                        width: 32,
-                        height: 32,
-                      ),
-                      Gap(96.0),
-                      SignUpWidget(),
-                    ],
+            ),
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                  left: -100,
+                  top: -400,
+                  child: SvgIcon(
+                    name: SvgIcons.C,
+                    // color: Colors.black,
+                    width: MediaQuery.of(context).size.width * 1.5,
+                    height: MediaQuery.of(context).size.width * 1.5,
                   ),
                 ),
-              ),
-            ],
+                const SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: [
+                        SvgIcon(
+                          name: SvgIcons.logo,
+                          width: 32,
+                          height: 32,
+                        ),
+                        Gap(96.0),
+                        SignUpWidget(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -117,6 +122,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   final formKey = GlobalKey<FormState>();
 
+  bool error = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -141,8 +148,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             key: formKey,
             child: Column(
               children: [
-                TextFieldWidget(
+                AnimatedTextFormField(
                   controller: firsNameController,
+                  error: error,
                   hintText: 'First Name',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -153,8 +161,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   },
                 ),
                 const Gap(16.0),
-                TextFieldWidget(
+                AnimatedTextFormField(
                   controller: lastNameController,
+                  error: error,
                   hintText: 'Last Name',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -165,8 +174,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   },
                 ),
                 const Gap(16.0),
-                TextFieldWidget(
+                AnimatedTextFormField(
                   controller: emailController,
+                  error: error,
                   hintText: 'Email Address',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -179,8 +189,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   },
                 ),
                 const Gap(16.0),
-                TextFieldWidget(
+                AnimatedTextFormField(
                   controller: passwordController,
+                  error: error,
                   hintText: 'Password',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -193,8 +204,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   },
                 ),
                 const Gap(16),
-                TextFieldWidget(
+                AnimatedTextFormField(
                   controller: confirmPasswordController,
+                  error: error,
                   hintText: 'Confirm Password',
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -212,9 +224,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           const Gap(32.0),
           ButtonWidget(
             onPressed: () {
-              // if (formKey.currentState!.validate()) {
-              Get.offAllNamed(VerifyEmailScreen.routeName);
-              // }
+              FocusScope.of(context).unfocus();
+
+              setState(() {
+                error = !formKey.currentState!.validate();
+              });
+              if (!error) {
+                Get.offAllNamed(VerifyEmailScreen.routeName);
+              }
             },
             padding: const EdgeInsets.symmetric(vertical: 13.0),
             fontSize: 18,

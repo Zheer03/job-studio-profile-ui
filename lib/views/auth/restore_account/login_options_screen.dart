@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
@@ -84,7 +86,8 @@ class LoginOptionsWidget extends StatefulWidget {
 }
 
 class _LoginOptionsWidgetState extends State<LoginOptionsWidget> {
-  LoginOption defaultLoginOption = LoginOption.google;
+  LoginOption defaultLoginOption =
+      Platform.isAndroid ? LoginOption.google : LoginOption.apple;
 
   @override
   Widget build(BuildContext context) {
@@ -118,21 +121,38 @@ class _LoginOptionsWidgetState extends State<LoginOptionsWidget> {
                 const Gap(24.0),
                 Column(
                   children: [
-                    RadioButtonCardWidget(
-                      onTap: () {
-                        setState(() {
-                          defaultLoginOption = LoginOption.google;
-                        });
-                      },
-                      selected: defaultLoginOption == LoginOption.google,
-                      iconBackgroundColor: AppColors.systemGray06Light,
-                      svgIcon: SvgIcon(
-                        name: LoginOption.google.icon,
+                    if (Platform.isAndroid)
+                      RadioButtonCardWidget(
+                        onTap: () {
+                          setState(() {
+                            defaultLoginOption = LoginOption.google;
+                          });
+                        },
+                        selected: defaultLoginOption == LoginOption.google,
+                        iconBackgroundColor: AppColors.systemGray06Light,
+                        svgIcon: SvgIcon(
+                          name: LoginOption.google.icon,
+                        ),
+                        icon: LoginOption.google.icon,
+                        borderWidth: 1.5,
+                        title: LoginOption.google.name,
+                      )
+                    else
+                      RadioButtonCardWidget(
+                        onTap: () {
+                          setState(() {
+                            defaultLoginOption = LoginOption.apple;
+                          });
+                        },
+                        selected: defaultLoginOption == LoginOption.apple,
+                        iconBackgroundColor: AppColors.systemGray06Light,
+                        svgIcon: SvgIcon(
+                          name: LoginOption.apple.icon,
+                        ),
+                        icon: LoginOption.apple.icon,
+                        borderWidth: 1.5,
+                        title: LoginOption.apple.name,
                       ),
-                      icon: LoginOption.google.icon,
-                      borderWidth: 1.5,
-                      title: LoginOption.google.name,
-                    ),
                     const Gap(16.0),
                     RadioButtonCardWidget(
                       onTap: () {
@@ -160,6 +180,9 @@ class _LoginOptionsWidgetState extends State<LoginOptionsWidget> {
                     // Google
                     // TODO: Handle this case.
                     break;
+                  case LoginOption.apple:
+                    // TODO: Handle this case.
+                    break;
                   case LoginOption.phoneNumber:
                     // Phone Number
                     Get.toNamed(LoginByPhoneNumberScreen.routeName);
@@ -176,6 +199,7 @@ class _LoginOptionsWidgetState extends State<LoginOptionsWidget> {
 
 enum LoginOption {
   google(name: 'Google', icon: SvgIcons.google),
+  apple(name: 'Apple', icon: SvgIcons.apple),
   phoneNumber(name: 'Phone Number', icon: SvgIcons.phone);
 
   final String name;

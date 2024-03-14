@@ -23,51 +23,56 @@ class LoginByPhoneNumberScreen extends StatelessWidget {
         systemUiOverlayStyle: SystemUiOverlayStyle.dark,
         backgroundColor: AppColors.transparent,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          // color: Colors.amber,
-          gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            transform: const GradientRotation(0.4),
-            stops: const [0.7, 1],
-            colors: [
-              // const Color(0xFFF9F9F9).withOpacity(1),
-              // AppColors.systemWhite,
-              AppColors.logoGreen.withAlpha(0),
-              AppColors.logoGreen.withAlpha(40),
-            ],
-          ),
-        ),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Positioned(
-              left: -100,
-              top: -400,
-              child: SvgIcon(
-                name: SvgIcons.C,
-                // color: Colors.black,
-                width: MediaQuery.of(context).size.width * 1.5,
-                height: MediaQuery.of(context).size.width * 1.5,
-              ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            // color: Colors.amber,
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              transform: const GradientRotation(0.4),
+              stops: const [0.7, 1],
+              colors: [
+                // const Color(0xFFF9F9F9).withOpacity(1),
+                // AppColors.systemWhite,
+                AppColors.logoGreen.withAlpha(0),
+                AppColors.logoGreen.withAlpha(40),
+              ],
             ),
-            const SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    SvgIcon(
-                      name: SvgIcons.logo,
-                      width: 32,
-                      height: 32,
-                    ),
-                    LoginByPhoneNumberWidget(),
-                  ],
+          ),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Positioned(
+                left: -100,
+                top: -400,
+                child: SvgIcon(
+                  name: SvgIcons.C,
+                  // color: Colors.black,
+                  width: MediaQuery.of(context).size.width * 1.5,
+                  height: MediaQuery.of(context).size.width * 1.5,
                 ),
               ),
-            ),
-          ],
+              const SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    children: [
+                      SvgIcon(
+                        name: SvgIcons.logo,
+                        width: 32,
+                        height: 32,
+                      ),
+                      LoginByPhoneNumberWidget(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -100,6 +105,8 @@ class _LoginByPhoneNumberWidgetState extends State<LoginByPhoneNumberWidget> {
   }
 
   final formKey = GlobalKey<FormState>();
+
+  bool error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +142,7 @@ class _LoginByPhoneNumberWidgetState extends State<LoginByPhoneNumberWidget> {
                   key: formKey,
                   child: PhoneNumberTextFieldWidget(
                     controller: controller,
+                    error: error,
                   ),
                 ),
               ],
@@ -143,7 +151,12 @@ class _LoginByPhoneNumberWidgetState extends State<LoginByPhoneNumberWidget> {
           const Spacer(),
           ButtonWidget(
             onPressed: () {
-              if (formKey.currentState!.validate()) {
+              FocusScope.of(context).unfocus();
+
+              setState(() {
+                error = !formKey.currentState!.validate();
+              });
+              if (!error) {
                 Get.toNamed(PhoneNumberCodeVerificationScreen.routeName);
               }
             },

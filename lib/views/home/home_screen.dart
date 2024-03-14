@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               // color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-            offset: const Offset(2, 2),
+            offset: const Offset(2, 0),
             child: IconButtonWidget(
               onPressed: () {},
               icon: SvgIcons.message,

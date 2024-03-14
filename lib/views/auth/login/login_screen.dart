@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
@@ -9,7 +8,6 @@ import 'package:job_studio_profile_ui/theme/app_theme.dart';
 import 'package:job_studio_profile_ui/utilities/svg_icons.dart';
 import 'package:job_studio_profile_ui/views/auth/login/forgot_password_screen.dart';
 import 'package:job_studio_profile_ui/views/auth/login/sign_up_screen.dart';
-import 'package:job_studio_profile_ui/views/auth/login/verify_email_screen.dart';
 import 'package:job_studio_profile_ui/views/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:job_studio_profile_ui/widgets/app_bar_widget.dart';
 import 'package:job_studio_profile_ui/widgets/button_widget.dart';
@@ -31,51 +29,56 @@ class LoginScreen extends StatelessWidget {
         systemUiOverlayStyle: SystemUiOverlayStyle.dark,
         backgroundColor: AppColors.transparent,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          // color: Colors.amber,
-          gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            transform: const GradientRotation(0.4),
-            stops: const [0.7, 1],
-            colors: [
-              // const Color(0xFFF9F9F9).withOpacity(1),
-              // AppColors.systemWhite,
-              AppColors.logoGreen.withAlpha(0),
-              AppColors.logoGreen.withAlpha(40),
-            ],
-          ),
-        ),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Positioned(
-              left: -100,
-              top: -400,
-              child: SvgIcon(
-                name: SvgIcons.C,
-                // color: Colors.black,
-                width: MediaQuery.of(context).size.width * 1.5,
-                height: MediaQuery.of(context).size.width * 1.5,
-              ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            // color: Colors.amber,
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              transform: const GradientRotation(0.4),
+              stops: const [0.7, 1],
+              colors: [
+                // const Color(0xFFF9F9F9).withOpacity(1),
+                // AppColors.systemWhite,
+                AppColors.logoGreen.withAlpha(0),
+                AppColors.logoGreen.withAlpha(40),
+              ],
             ),
-            const SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    SvgIcon(
-                      name: SvgIcons.logo,
-                      width: 32,
-                      height: 32,
-                    ),
-                    LoginWidget(),
-                  ],
+          ),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Positioned(
+                left: -100,
+                top: -400,
+                child: SvgIcon(
+                  name: SvgIcons.C,
+                  // color: Colors.black,
+                  width: MediaQuery.of(context).size.width * 1.5,
+                  height: MediaQuery.of(context).size.width * 1.5,
                 ),
               ),
-            ),
-          ],
+              const SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    children: [
+                      SvgIcon(
+                        name: SvgIcons.logo,
+                        width: 32,
+                        height: 32,
+                      ),
+                      LoginWidget(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -110,6 +113,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   final formKey = GlobalKey<FormState>();
+  bool error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +142,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                     color: AppColors.systemGray03Light,
                   ),
                   const Gap(24.0),
-                  TextFieldWidget(
+                  AnimatedTextFormField(
                     controller: emailController,
+                    error: error,
                     hintText: 'Email Address',
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -152,8 +157,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                     },
                   ),
                   const Gap(16.0),
-                  TextFieldWidget(
+                  AnimatedTextFormField(
                     controller: passwordController,
+                    error: error,
                     hintText: 'Password',
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -191,7 +197,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                   flex: 200,
                   child: ButtonWidget(
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {
+                      FocusScope.of(context).unfocus();
+
+                      setState(() {
+                        error = !formKey.currentState!.validate();
+                      });
+                      if (!error) {
                         log('true');
                         Get.offAllNamed(BottomNavBarScreen.routeName);
                       } else {
@@ -204,6 +215,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 const Gap(16.0),
+                // QR Code Scanner Button
                 Flexible(
                   flex: 32,
                   child: AspectRatio(
@@ -217,7 +229,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ButtonWidget(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.offAllNamed(BottomNavBarScreen.routeName);
+                        },
                         text: '',
                         color: AppColors.transparent,
                         // splashColor: Theme.of(context).colorScheme.primary,
@@ -275,7 +289,6 @@ class _LoginWidgetState extends State<LoginWidget> {
               ButtonWidget(
                 onPressed: () {
                   // TODO Apple SignIn
-                  Get.toNamed(VerifyEmailScreen.routeName);
                 },
                 color: AppColors.logoBlack,
                 text: '',

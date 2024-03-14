@@ -12,7 +12,6 @@ void main() async {
       debugShowCheckedModeBanner: false,
       initialBinding: BindingManager(),
       initialRoute: WelcomeScreen.routeName,
-      // initialRoute: BottomNavBarScreen.routeName,
       getPages: RoutesClass.routes,
       theme: AppTheme.lightTheme,
       themeMode: ThemeMode.light,

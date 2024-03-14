@@ -207,6 +207,7 @@ class AnimatedTextFormField extends StatefulWidget {
     this.enabled = true,
     this.canRequestFocus = true,
     this.suffix,
+    this.inputFormatters,
   });
 
   final TextEditingController controller;
@@ -219,6 +220,7 @@ class AnimatedTextFormField extends StatefulWidget {
   final bool enabled;
   final bool canRequestFocus;
   final Widget? suffix;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<AnimatedTextFormField> createState() => _AnimatedTextFormFieldState();
@@ -257,6 +259,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
           focusNode: focusNode,
           keyboardType: widget.keyboardType,
           maxLines: widget.maxLines,
+          inputFormatters: widget.inputFormatters,
           style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,

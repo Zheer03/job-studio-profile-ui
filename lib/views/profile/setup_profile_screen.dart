@@ -283,8 +283,8 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
 
   @override
   void initState() {
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
+    firstNameController = TextEditingController(text: 'Zhir');
+    lastNameController = TextEditingController(text: 'Mohammed');
     taglineController = TextEditingController();
     experienceController = TextEditingController();
     genderController = TextEditingController();
@@ -545,9 +545,9 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
               setState(() {
                 textFieldError = !formKey.currentState!.validate();
               });
-              Get.offAllNamed(ChooseCategoriesScreen.routeName);
               if (!textFieldError) {
                 log('error: $textFieldError');
+                Get.offAllNamed(ChooseCategoriesScreen.routeName);
               } else {
                 log('error: $textFieldError');
               }
