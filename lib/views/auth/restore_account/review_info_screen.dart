@@ -194,6 +194,7 @@ class _ReviewInfoWidgetState extends State<ReviewInfoWidget> {
                     controller: passwordController,
                     error: error,
                     hintText: 'Password',
+                    isPassword: true,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Enter your Password';
@@ -209,6 +210,7 @@ class _ReviewInfoWidgetState extends State<ReviewInfoWidget> {
                     controller: confirmPasswordController,
                     error: error,
                     hintText: 'Confirm Password',
+                    isPassword: true,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Enter your Password';

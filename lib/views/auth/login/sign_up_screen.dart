@@ -193,6 +193,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   controller: passwordController,
                   error: error,
                   hintText: 'Password',
+                  isPassword: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter your Password';
@@ -208,6 +209,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   controller: confirmPasswordController,
                   error: error,
                   hintText: 'Confirm Password',
+                  isPassword: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter your Password';

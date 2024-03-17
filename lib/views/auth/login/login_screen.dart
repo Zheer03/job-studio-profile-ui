@@ -95,6 +95,137 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Gap(64.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 0.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextWidget(
+                  'Login',
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
+                  // color: AppColors.systemGray,
+                ),
+                TextWidget(
+                  'Login to your Job Studio account',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.systemGray03Light,
+                ),
+                Gap(24.0),
+                LoginForm(),
+              ],
+            ),
+          ),
+          const Gap(24.0),
+          const Center(
+            child: TextWidget(
+              'Or',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.systemGray02Light,
+            ),
+          ),
+          const Gap(24.0),
+          if (Platform.isAndroid)
+            ButtonWidget(
+              onPressed: () {
+                // TODO Google SignIn
+              },
+              shadow: true,
+              color: AppColors.systemWhite,
+              textColor: AppColors.systemGray05Dark,
+              text: '',
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgIcon(
+                    name: SvgIcons.google,
+                    width: 22,
+                    height: 22,
+                  ),
+                  Gap(8.0),
+                  TextWidget(
+                    'Continue with Google',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.systemGray05Dark,
+                  ),
+                ],
+              ),
+            )
+          else
+            ButtonWidget(
+              onPressed: () {
+                // TODO Apple SignIn
+              },
+              color: AppColors.logoBlack,
+              text: '',
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgIcon(
+                    name: SvgIcons.apple,
+                    width: 22,
+                    height: 22,
+                    color: AppColors.systemWhite,
+                  ),
+                  Gap(8.0),
+                  TextWidget(
+                    'Continue with Apple',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.systemWhite,
+                  ),
+                ],
+              ),
+            ),
+          const Gap(16.0),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const TextWidget(
+                'Don\'t have an acoount?',
+                fontWeight: FontWeight.w600,
+                color: AppColors.systemGray02Light,
+              ),
+              const Gap(4.0),
+              GestureDetector(
+                onTap: () {
+                  Get.offNamed(SignUpScreen.routeName);
+                },
+                child: const TextWidget(
+                  'SignUp',
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.logoGreen,
+                ),
+              ),
+            ],
+          ),
+          const Gap(32.0),
+        ],
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
@@ -117,227 +248,116 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Form(
-        key: formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Gap(64.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const TextWidget(
-                    'Login',
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                    // color: AppColors.systemGray,
-                  ),
-                  const TextWidget(
-                    'Login to your Job Studio account',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.systemGray03Light,
-                  ),
-                  const Gap(24.0),
-                  AnimatedTextFormField(
-                    controller: emailController,
-                    error: error,
-                    hintText: 'Email Address',
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your Email';
-                      } else if (!isEmail(value)) {
-                        return 'Email should be written in the correct format';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  const Gap(16.0),
-                  AnimatedTextFormField(
-                    controller: passwordController,
-                    error: error,
-                    hintText: 'Password',
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your Password';
-                      } else if (value.length < 8) {
-                        return 'Password must be at least 8 characters in length';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  const Gap(16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(ForgotPasswordScreen.routeName);
-                        },
-                        child: const TextWidget(
-                          'Forgot Password?',
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.systemGray02Light,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            const Gap(112.0),
-            Row(
-              children: [
-                Flexible(
-                  flex: 200,
-                  child: ButtonWidget(
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-
-                      setState(() {
-                        error = !formKey.currentState!.validate();
-                      });
-                      if (!error) {
-                        log('true');
-                        Get.offAllNamed(BottomNavBarScreen.routeName);
-                      } else {
-                        log('FALSE');
-                      }
-                    },
-                    padding: const EdgeInsets.symmetric(vertical: 13.0),
-                    fontSize: 18,
-                    text: 'Login',
-                  ),
-                ),
-                const Gap(16.0),
-                // QR Code Scanner Button
-                Flexible(
-                  flex: 32,
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1.5,
-                          color: AppColors.systemGray03Light,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ButtonWidget(
-                        onPressed: () {
-                          Get.offAllNamed(BottomNavBarScreen.routeName);
-                        },
-                        text: '',
-                        color: AppColors.transparent,
-                        // splashColor: Theme.of(context).colorScheme.primary,
-                        // .withOpacity(0.4),
-                        child: SvgIcon(
-                          name: SvgIcons.login_qr_code,
-                          width: 24,
-                          height: 24,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const Gap(24.0),
-            const Center(
-              child: TextWidget(
-                'Or',
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.systemGray02Light,
-              ),
-            ),
-            const Gap(24.0),
-            if (Platform.isAndroid)
-              ButtonWidget(
-                onPressed: () {
-                  // TODO Google SignIn
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AnimatedTextFormField(
+            controller: emailController,
+            error: error,
+            hintText: 'Email Address',
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Enter your Email';
+              } else if (!isEmail(value)) {
+                return 'Email should be written in the correct format';
+              } else {
+                return null;
+              }
+            },
+          ),
+          const Gap(16.0),
+          AnimatedTextFormField(
+            controller: passwordController,
+            error: error,
+            hintText: 'Password',
+            isPassword: true,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Enter your Password';
+              } else if (value.length < 8) {
+                return 'Password must be at least 8 characters in length';
+              } else {
+                return null;
+              }
+            },
+          ),
+          const Gap(16.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(ForgotPasswordScreen.routeName);
                 },
-                shadow: true,
-                color: AppColors.systemWhite,
-                textColor: AppColors.systemGray05Dark,
-                text: '',
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgIcon(
-                      name: SvgIcons.google,
-                      width: 22,
-                      height: 22,
-                    ),
-                    Gap(8.0),
-                    TextWidget(
-                      'Continue with Google',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.systemGray05Dark,
-                    ),
-                  ],
-                ),
-              )
-            else
-              ButtonWidget(
-                onPressed: () {
-                  // TODO Apple SignIn
-                },
-                color: AppColors.logoBlack,
-                text: '',
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgIcon(
-                      name: SvgIcons.apple,
-                      width: 22,
-                      height: 22,
-                      color: AppColors.systemWhite,
-                    ),
-                    Gap(8.0),
-                    TextWidget(
-                      'Continue with Apple',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.systemWhite,
-                    ),
-                  ],
-                ),
-              ),
-            const Gap(16.0),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const TextWidget(
-                  'Don\'t have an acoount?',
+                child: const TextWidget(
+                  'Forgot Password?',
                   fontWeight: FontWeight.w600,
                   color: AppColors.systemGray02Light,
                 ),
-                const Gap(4.0),
-                GestureDetector(
-                  onTap: () {
-                    Get.offNamed(SignUpScreen.routeName);
+              ),
+            ],
+          ),
+          const Gap(112.0),
+          Row(
+            children: [
+              Flexible(
+                flex: 200,
+                child: ButtonWidget(
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+
+                    setState(() {
+                      error = !formKey.currentState!.validate();
+                    });
+                    if (!error) {
+                      log('true');
+                      Get.offAllNamed(BottomNavBarScreen.routeName);
+                    } else {
+                      log('FALSE');
+                    }
                   },
-                  child: const TextWidget(
-                    'SignUp',
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.logoGreen,
+                  padding: const EdgeInsets.symmetric(vertical: 13.0),
+                  fontSize: 18,
+                  text: 'Login',
+                ),
+              ),
+              const Gap(16.0),
+              // QR Code Scanner Button
+              Flexible(
+                flex: 32,
+                child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.5,
+                        color: AppColors.systemGray03Light,
+                      ),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: ButtonWidget(
+                      onPressed: () {
+                        Get.offAllNamed(BottomNavBarScreen.routeName);
+                      },
+                      text: '',
+                      color: AppColors.transparent,
+                      // splashColor: Theme.of(context).colorScheme.primary,
+                      // .withOpacity(0.4),
+                      child: SvgIcon(
+                        name: SvgIcons.login_qr_code,
+                        width: 24,
+                        height: 24,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const Gap(32.0),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

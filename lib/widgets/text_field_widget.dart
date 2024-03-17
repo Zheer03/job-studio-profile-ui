@@ -208,6 +208,7 @@ class AnimatedTextFormField extends StatefulWidget {
     this.canRequestFocus = true,
     this.suffix,
     this.inputFormatters,
+    this.isPassword = false,
   });
 
   final TextEditingController controller;
@@ -221,6 +222,7 @@ class AnimatedTextFormField extends StatefulWidget {
   final bool canRequestFocus;
   final Widget? suffix;
   final List<TextInputFormatter>? inputFormatters;
+  final bool isPassword;
 
   @override
   State<AnimatedTextFormField> createState() => _AnimatedTextFormFieldState();
@@ -257,8 +259,11 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
           canRequestFocus: widget.canRequestFocus,
           controller: widget.controller,
           focusNode: focusNode,
-          keyboardType: widget.keyboardType,
+          keyboardType: widget.isPassword
+              ? TextInputType.visiblePassword
+              : widget.keyboardType,
           maxLines: widget.maxLines,
+          obscureText: widget.isPassword,
           inputFormatters: widget.inputFormatters,
           style: const TextStyle(
             fontSize: 15,
@@ -373,7 +378,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
             child: Align(
               child: widget.suffix,
             ),
-          )
+          ),
       ],
     );
   }
