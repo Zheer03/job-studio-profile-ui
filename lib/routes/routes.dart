@@ -16,10 +16,17 @@ import 'package:job_studio_profile_ui/views/profile/job_categories_screen.dart';
 import 'package:job_studio_profile_ui/views/profile/locations_screen.dart';
 import 'package:job_studio_profile_ui/views/profile/settings/settings_screen.dart';
 import 'package:job_studio_profile_ui/views/profile/setup_profile_screen.dart';
+import 'package:job_studio_profile_ui/views/splash_screen.dart';
 import 'package:job_studio_profile_ui/widgets/full_screen_widget.dart';
 
 class RoutesClass {
   static List<GetPage> routes = [
+    GetPage(
+      name: SplashScreen.routeName,
+      page: () => const SplashScreen(),
+      customTransition: CustomFadeTransition(),
+      transitionDuration: const Duration(milliseconds: 300),
+    ),
     GetPage(
       name: WelcomeScreen.routeName,
       page: () => const WelcomeScreen(),

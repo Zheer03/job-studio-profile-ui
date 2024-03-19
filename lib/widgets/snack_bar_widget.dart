@@ -9,6 +9,7 @@ SnackbarController snackBarWidget({
   String? message,
   double? messageHeight,
   Color? backgroundColor,
+  Duration? duration,
 }) =>
     Get.showSnackbar(
       GetSnackBar(
@@ -32,7 +33,7 @@ SnackbarController snackBarWidget({
                 height: messageHeight,
               )
             : null,
-        duration: const Duration(seconds: 2),
+        duration: duration ?? const Duration(seconds: 2),
         animationDuration: Durations.extralong1,
         backgroundColor: backgroundColor ?? const GetSnackBar().backgroundColor,
       ),

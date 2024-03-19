@@ -65,7 +65,7 @@ class _AITextFieldWidgetState extends State<AITextFieldWidget> {
   int currentCharIndex = 0;
 
   String text =
-      'First of all, we all have to be aware that time is our most valuable resource. We can\'t trade it for everything because it is very limited. it often feels like there\'s never enough of it. Assignments pile up, exams unexpectedly show up, seminars have to be presented, and much more. First of all, we all have to be aware that time is our most valuable resource. We can\'t trade it for everything because it is very limited. it often feels like there\'s never enough of it. Assignments pile up, exams unexpectedly show up, seminars have to be presented, and much more. First of all, we all have to be aware that time is our most valuable resource. We can\'t trade it for everything because it is very limited. it often feels like there\'s never enough of it. Assignments pile up, exams unexpectedly show up, seminars have to be presented, and much more. First of all, we all have to be aware that time is our most valuable resource. We can\'t trade it for everything because it is very limited. it often feels like there\'s never enough of it. Assignments pile up, exams unexpectedly show up, seminars have to be presented, and much more.';
+      'Milestone is a method that will allow the business and the freelancer an opportunity to agree on the actions, services, or the payment that are included in the project. With the use of milestones.';
 
   Future typeWritingAnimation() async {
     for (currentCharIndex = 0;
@@ -82,11 +82,6 @@ class _AITextFieldWidgetState extends State<AITextFieldWidget> {
         );
         setState(() {});
       } else {
-        // setState(() {
-        //   // currentCharIndex = (currentCharIndex + 1) % text.length;
-        //   currentCharIndex = 0;
-        //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
-        // });
         return;
       }
     }

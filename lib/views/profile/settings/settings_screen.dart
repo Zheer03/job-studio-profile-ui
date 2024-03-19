@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:job_studio_profile_ui/getx/controllers/bottom_nav_bar_controller.dart';
+import 'package:job_studio_profile_ui/getx/controllers/user_controller.dart';
 import 'package:job_studio_profile_ui/theme/app_theme.dart';
 import 'package:job_studio_profile_ui/utilities/svg_icons.dart';
 import 'package:job_studio_profile_ui/views/auth/welcome_screen.dart';
 import 'package:job_studio_profile_ui/views/profile/settings/accounts/accounts_list_widget.dart';
-import 'package:job_studio_profile_ui/views/profile/settings/accounts/balance_card_widget.dart';
+import 'package:job_studio_profile_ui/widgets/balance_card_widget.dart';
 import 'package:job_studio_profile_ui/views/profile/settings/accounts/settings_icon_widget.dart';
 import 'package:job_studio_profile_ui/views/profile/settings/languages_list_widget.dart';
 import 'package:job_studio_profile_ui/widgets/app_bar_widget.dart';
@@ -168,7 +169,6 @@ class AccountButtonsWidget extends StatelessWidget {
           title: 'Edit Profile',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.first,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -176,7 +176,6 @@ class AccountButtonsWidget extends StatelessWidget {
           title: 'Security',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -184,7 +183,6 @@ class AccountButtonsWidget extends StatelessWidget {
           title: 'CV Builder',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -192,7 +190,6 @@ class AccountButtonsWidget extends StatelessWidget {
           title: 'Withdraw',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () async {
@@ -242,7 +239,6 @@ class ActivitiesButtonsWidget extends StatelessWidget {
           title: 'My Activities',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.first,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -281,7 +277,6 @@ class AppButtonsWidget extends StatelessWidget {
           title: 'Login via QR code',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.first,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -289,7 +284,6 @@ class AppButtonsWidget extends StatelessWidget {
           title: 'Become a company',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () async {
@@ -302,7 +296,6 @@ class AppButtonsWidget extends StatelessWidget {
           title: 'Language',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -310,7 +303,6 @@ class AppButtonsWidget extends StatelessWidget {
           title: 'Legal Center',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -318,7 +310,6 @@ class AppButtonsWidget extends StatelessWidget {
           title: 'Report and Ticket',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -326,7 +317,6 @@ class AppButtonsWidget extends StatelessWidget {
           title: 'Help Center',
           defaultTrailing: true,
           tileButtonPosition: TileButtonPosition.middle,
-          dividerIndent: 64,
         ),
         TileButtonWidget(
           onTap: () {},
@@ -382,7 +372,8 @@ class LogoutButton extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 48.0),
                   child: ButtonWidget(
-                    onPressed: () {
+                    onPressed: () async {
+                      await UserController.to.logout();
                       Get.back();
                       BottomNavBarController.to.clearIndex();
                       Get.offAllNamed(WelcomeScreen.routeName);

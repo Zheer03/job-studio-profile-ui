@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:job_studio_profile_ui/theme/app_theme.dart';
+import 'package:job_studio_profile_ui/extensions/get_file_size.dart';
 import 'package:job_studio_profile_ui/utilities/svg_icons.dart';
 import 'package:job_studio_profile_ui/views/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:job_studio_profile_ui/views/profile/choose_categories_screen.dart';
@@ -572,6 +574,7 @@ class UploadCVWidget extends StatefulWidget {
 class _UploadCVWidgetState extends State<UploadCVWidget> {
   File? selectedFile;
   String? selectedFileName;
+  Future<dynamic>? selectedFileSize;
   @override
   Widget build(BuildContext context) {
     return TileButtonWidget(
@@ -591,6 +594,7 @@ class _UploadCVWidgetState extends State<UploadCVWidget> {
         setState(() {
           selectedFile = file;
           selectedFileName = platformFile.name;
+          // selectedFileSize = getFileSize(file).toString();
         });
       },
       leading: IntrinsicHeight(
@@ -618,8 +622,8 @@ class _UploadCVWidgetState extends State<UploadCVWidget> {
       titleFontWeight: FontWeight.w600,
       backgroundColor: Theme.of(context).colorScheme.background,
       leadingRightPadding: 4.0,
-      trailing: const TextWidget(
-        'MAX 5.0 MB',
+      trailing: TextWidget(
+        selectedFile != null ? '${selectedFile?.size} MB' : 'MAX 5.0 MB',
         fontSize: 11,
         color: AppColors.systemGray,
       ),

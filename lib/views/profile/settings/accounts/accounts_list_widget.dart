@@ -48,7 +48,7 @@ class AccountsListWidget extends StatelessWidget {
                     title: 'Zhir Mohammed',
                     titleFontSize: 15,
                     titleFontWeight: FontWeight.w600,
-                    subtitle: 'Information Technology',
+                    subtitleText: 'Information Technology',
                     subtitleFontSize: 11,
                     trailing: CheckMarkWidget(
                       selected: index == selectedIndex,

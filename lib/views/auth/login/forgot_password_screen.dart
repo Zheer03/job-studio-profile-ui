@@ -45,7 +45,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               ],
             ),
           ),
-          child: Stack(
+          child: const Stack(
             alignment: Alignment.topCenter,
             children: [
               Positioned(
@@ -54,11 +54,11 @@ class ForgotPasswordScreen extends StatelessWidget {
                 child: SvgIcon(
                   name: SvgIcons.C,
                   // color: Colors.black,
-                  width: MediaQuery.of(context).size.width * 1.5,
-                  height: MediaQuery.of(context).size.width * 1.5,
+                  width: 645.0,
+                  height: 645.0,
                 ),
               ),
-              const SafeArea(
+              SafeArea(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(

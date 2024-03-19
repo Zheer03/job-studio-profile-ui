@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:job_studio_profile_ui/getx/controllers/user_controller.dart';
 import 'package:job_studio_profile_ui/theme/app_theme.dart';
 import 'package:job_studio_profile_ui/utilities/svg_icons.dart';
 import 'package:job_studio_profile_ui/views/auth/login/forgot_password_screen.dart';
@@ -11,6 +12,7 @@ import 'package:job_studio_profile_ui/views/auth/login/sign_up_screen.dart';
 import 'package:job_studio_profile_ui/views/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:job_studio_profile_ui/widgets/app_bar_widget.dart';
 import 'package:job_studio_profile_ui/widgets/button_widget.dart';
+import 'package:job_studio_profile_ui/widgets/snack_bar_widget.dart';
 import 'package:job_studio_profile_ui/widgets/text_field_widget.dart';
 import 'package:job_studio_profile_ui/widgets/text_widget.dart';
 import 'package:validators/validators.dart';
@@ -49,20 +51,21 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
           ),
-          child: Stack(
+          child: const Stack(
             alignment: Alignment.topCenter,
             children: [
               Positioned(
                 left: -100,
                 top: -400,
+                right: 0,
                 child: SvgIcon(
                   name: SvgIcons.C,
                   // color: Colors.black,
-                  width: MediaQuery.of(context).size.width * 1.5,
-                  height: MediaQuery.of(context).size.width * 1.5,
+                  width: 645.0,
+                  height: 645.0,
                 ),
               ),
-              const SafeArea(
+              SafeArea(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
@@ -304,23 +307,43 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               Flexible(
                 flex: 200,
-                child: ButtonWidget(
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
+                child: AspectRatio(
+                  aspectRatio: 6.4 / 1,
+                  child: ButtonWidget(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
 
-                    setState(() {
-                      error = !formKey.currentState!.validate();
-                    });
-                    if (!error) {
-                      log('true');
-                      Get.offAllNamed(BottomNavBarScreen.routeName);
-                    } else {
-                      log('FALSE');
-                    }
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 13.0),
-                  fontSize: 18,
-                  text: 'Login',
+                      setState(() {
+                        error = !formKey.currentState!.validate();
+                      });
+                      if (!error) {
+                        UserController.to
+                            .login(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        )
+                            .then((user) {
+                          if (user != null) {
+                            snackBarWidget(
+                              title: 'Welcome Back!',
+                              message: 'Continue where you left off!',
+                              duration: const Duration(seconds: 3),
+                              messageHeight: 0.8,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                            );
+                            return Get.offAllNamed(
+                                BottomNavBarScreen.routeName);
+                          }
+                        });
+                      } else {
+                        log('FALSE');
+                      }
+                    },
+                    padding: const EdgeInsets.symmetric(vertical: 13.0),
+                    fontSize: 18,
+                    text: 'Login',
+                  ),
                 ),
               ),
               const Gap(16.0),

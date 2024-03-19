@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:job_studio_profile_ui/getx/controllers/user_controller.dart';
 import 'package:job_studio_profile_ui/theme/app_theme.dart';
 import 'package:job_studio_profile_ui/utilities/svg_icons.dart';
 import 'package:job_studio_profile_ui/views/auth/login/login_screen.dart';
 import 'package:job_studio_profile_ui/views/auth/login/verify_email_screen.dart';
 import 'package:job_studio_profile_ui/widgets/app_bar_widget.dart';
 import 'package:job_studio_profile_ui/widgets/button_widget.dart';
+import 'package:job_studio_profile_ui/widgets/snack_bar_widget.dart';
 import 'package:job_studio_profile_ui/widgets/text_field_widget.dart';
 import 'package:job_studio_profile_ui/widgets/text_widget.dart';
 import 'package:validators/validators.dart';
@@ -46,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                 ],
               ),
             ),
-            child: Stack(
+            child: const Stack(
               alignment: Alignment.topCenter,
               children: [
                 Positioned(
@@ -55,11 +57,11 @@ class SignUpScreen extends StatelessWidget {
                   child: SvgIcon(
                     name: SvgIcons.C,
                     // color: Colors.black,
-                    width: MediaQuery.of(context).size.width * 1.5,
-                    height: MediaQuery.of(context).size.width * 1.5,
+                    width: 645.0,
+                    height: 645.0,
                   ),
                 ),
-                const SafeArea(
+                SafeArea(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
@@ -225,14 +227,35 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           ),
           const Gap(32.0),
           ButtonWidget(
-            onPressed: () {
+            onPressed: () async {
               FocusScope.of(context).unfocus();
 
               setState(() {
                 error = !formKey.currentState!.validate();
               });
               if (!error) {
-                Get.offAllNamed(VerifyEmailScreen.routeName);
+                await UserController.to
+                    .signUp(
+                  firstName: firsNameController.text,
+                  lastName: lastNameController.text,
+                  email: emailController.text,
+                  password: passwordController.text,
+                )
+                    .then(
+                  (user) {
+                    if (user != null) {
+                      snackBarWidget(
+                        title: 'Welcome',
+                        message:
+                            'You have successfully created your Job Studio account!',
+                        duration: const Duration(seconds: 3),
+                        messageHeight: 0.8,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      );
+                      Get.offAllNamed(VerifyEmailScreen.routeName);
+                    }
+                  },
+                );
               }
             },
             padding: const EdgeInsets.symmetric(vertical: 13.0),

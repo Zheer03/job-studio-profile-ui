@@ -7,28 +7,30 @@ import 'package:job_studio_profile_ui/widgets/text_widget.dart';
 
 enum TileButtonPosition { first, middle, last }
 
+// ignore: must_be_immutable
 class TileButtonWidget extends StatelessWidget {
-  const TileButtonWidget({
+  TileButtonWidget({
     super.key,
     this.onTap,
     required this.title,
     this.titleColor,
     this.titleFontSize,
     this.titleFontWeight,
-    this.subtitle,
+    this.subtitleText,
     this.subtitleColor,
     this.subtitleFontSize,
     this.subtitleFontWeight,
+    this.subtitle,
     this.tileButtonPosition,
     this.backgroundColor,
     this.leading,
     this.trailing,
     this.defaultTrailing = false,
     this.bottomDivider = true,
-    this.dividerIndent,
+    this.dividerIndent = 62,
     this.dividerEndIndent,
     this.contentPadding =
-        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
     this.leadingRightPadding = 16.0,
     this.border,
     this.splash = false,
@@ -36,6 +38,7 @@ class TileButtonWidget extends StatelessWidget {
     this.splashHighlightColor,
     this.headerText,
     this.shadow = false,
+    this.borderRadius,
   });
 
   final VoidCallback? onTap;
@@ -43,10 +46,11 @@ class TileButtonWidget extends StatelessWidget {
   final Color? titleColor;
   final double? titleFontSize;
   final FontWeight? titleFontWeight;
-  final String? subtitle;
+  final String? subtitleText;
   final Color? subtitleColor;
   final double? subtitleFontSize;
   final FontWeight? subtitleFontWeight;
+  final Widget? subtitle;
   final TileButtonPosition? tileButtonPosition;
   final Color? backgroundColor;
   final Widget? leading;
@@ -63,23 +67,23 @@ class TileButtonWidget extends StatelessWidget {
   final Color? splashHighlightColor;
   final String? headerText;
   final bool shadow;
+  BorderRadius? borderRadius = BorderRadius.circular(14.0);
 
   @override
   Widget build(BuildContext context) {
-    BorderRadius borderRadius = BorderRadius.circular(12.0);
     switch (tileButtonPosition) {
       case TileButtonPosition.first:
-        borderRadius = const BorderRadius.vertical(top: Radius.circular(12.0));
+        borderRadius = const BorderRadius.vertical(top: Radius.circular(14.0));
         break;
       case TileButtonPosition.middle:
         borderRadius = BorderRadius.zero;
         break;
       case TileButtonPosition.last:
         borderRadius =
-            const BorderRadius.vertical(bottom: Radius.circular(12.0));
+            const BorderRadius.vertical(bottom: Radius.circular(14.0));
         break;
       default:
-        borderRadius = BorderRadius.circular(12.0);
+        borderRadius = BorderRadius.circular(14.0);
         break;
     }
     return Container(
@@ -141,15 +145,18 @@ class TileButtonWidget extends StatelessWidget {
                               fontWeight: titleFontWeight ?? FontWeight.w500,
                               // height: 1,
                             ),
-                            if (subtitle != null)
-                              TextWidget(
-                                subtitle!,
-                                fontSize: subtitleFontSize ?? 10,
-                                fontWeight:
-                                    subtitleFontWeight ?? FontWeight.w500,
-                                color: subtitleColor ?? AppColors.systemGray,
-                                height: 1,
-                              ),
+                            subtitle ??
+                                (subtitleText != null
+                                    ? TextWidget(
+                                        subtitleText!,
+                                        fontSize: subtitleFontSize ?? 10,
+                                        fontWeight: subtitleFontWeight ??
+                                            FontWeight.w500,
+                                        color: subtitleColor ??
+                                            AppColors.systemGray,
+                                        height: 1,
+                                      )
+                                    : const SizedBox()),
                           ],
                         ),
                         const Spacer(),
@@ -158,8 +165,8 @@ class TileButtonWidget extends StatelessWidget {
                         else if (defaultTrailing)
                           const SvgIcon(
                             name: SvgIcons.arrow_forward,
-                            width: 20,
-                            height: 20,
+                            width: 18,
+                            height: 18,
                             color: AppColors.systemGray04Light,
                           ),
                       ],
